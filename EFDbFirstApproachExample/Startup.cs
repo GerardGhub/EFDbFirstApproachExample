@@ -16,7 +16,7 @@ namespace EFDbFirstApproachExample
         public void Configuration(IAppBuilder app)
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions() { AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie, LoginPath = new PathString("/Account/Login") });
-  
+            this.CreateRolesAndUsers();
         }
 
         public void CreateRolesAndUsers()
@@ -78,19 +78,19 @@ namespace EFDbFirstApproachExample
                 roleManager.Create(role);
             }
 
-            //Create Manager User
-            if (userManager.FindByName("customer") == null)
-            {
-                var user = new ApplicationUser();
-                user.UserName = "customer";
-                user.Email = "customer@gmail.com";
-                string userPassword = "customer123";
-                var chkUser = userManager.Create(user, userPassword);
-                if (chkUser.Succeeded)
-                {
-                    userManager.AddToRole(user.Id, "Customer");
-                }
-            }
+            ////Create Manager User
+            //if (userManager.FindByName("customer") == null)
+            //{
+            //    var user = new ApplicationUser();
+            //    user.UserName = "customer";
+            //    user.Email = "customer@gmail.com";
+            //    string userPassword = "customer123";
+            //    var chkUser = userManager.Create(user, userPassword);
+            //    if (chkUser.Succeeded)
+            //    {
+            //        userManager.AddToRole(user.Id, "Customer");
+            //    }
+            //}
 
         }
     }
