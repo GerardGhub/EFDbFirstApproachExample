@@ -2,18 +2,18 @@
 @using EFDbFirstApproachExample.HtmlHelpers
 
 @{
-    ViewBag.Title = "Create Product";
-    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manager/Views/Shared/ManagerLayoutPage1.cshtml";
 }
 
-<h2>Create Product</h2>
-
-@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<h2>Edit Product</h2>
+@using (Html.BeginForm("Edit", "Products", new { area = "Manager" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.HiddenFor(temp => temp.ProductID)
     <div class="form-row">
         <div class="form-group col-md-6">
             @Html.LabelFor(temp => temp.ProductName)
-            @Html.TextBoxFor(temp => temp.ProductName, new { placeholder ="Product Name", @class = "form-control" })
+            @Html.TextBoxFor(temp => temp.ProductName, new { placeholder = "Product Name", @class = "form-control" })
             @Html.ValidationMessageFor(temp => temp.ProductName)
         </div>
         <div class="form-group col-md-6">
@@ -42,10 +42,10 @@
                 @Html.ValidationMessageFor(temp => temp.AvailabilityStatus)
             </div>
             @*
-        @Html.DropDownListFor(temp => temp.AvailabilityStatus, new List<SelectListItem>() {
-            new SelectListItem() { Text = "In Stock", Value = "InStock" },
-            new SelectListItem() { Text = "Out of Stock", Value = "OutOfStock" }
-        }, "Please Select", new { @class ="form-control" })*@
+                @Html.DropDownListFor(temp => temp.AvailabilityStatus, new List<SelectListItem>() {
+                    new SelectListItem() { Text = "In Stock", Value = "InStock" },
+                    new SelectListItem() { Text = "Out of Stock", Value = "OutOfStock" }
+                }, "Please Select", new { @class ="form-control" })*@
         </div>
     </div>
     <div class="form-row">
@@ -66,13 +66,14 @@
     </div>
     <div class="form-group">
         <div class="form-check">
-            @Html.CheckBoxFor(temp => temp.Active.Value, new { @class = "form-check-input", value = "true" })
+            @Html.CheckBoxFor(temp => temp.Active, new { @class = "form-check-input", value = "true" })
             @Html.LabelFor(temp => temp.Active, new { @class = "form-check-label" })
             @Html.ValidationMessageFor(temp => temp.Photo)
         </div>
     </div>
 
     @Html.ValidationSummary()
-    <button type="submit" class="btn btn-success">Create</button>
-    <a class="btn btn-danger" href="/products/index">Cancel</a>
+    <button type="submit" class="btn btn-success">Update</button>
+    <a class="btn btn-danger" href="/Manager/products/index">Cancel</a>
 }
+

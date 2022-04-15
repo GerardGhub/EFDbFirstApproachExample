@@ -8,7 +8,7 @@ using EFDbFirstApproachExample.CustomValidations;
 
 namespace EFDbFirstApproachExample.Models
 {
-    [Table("Products", Schema ="dbo")]
+    [Table("Products", Schema = "dbo")]
     public class Product
     {
         [Key]
@@ -17,19 +17,20 @@ namespace EFDbFirstApproachExample.Models
 
         [Display(Name = "Product Name")]
         [Required(ErrorMessage = "Product Name can't be blank")]
-        [RegularExpression(@"^[A-Za-z ]*$", ErrorMessage = "Alphabets only")]
+        [RegularExpression(@"^[A-Za-z0-9 ]*$", ErrorMessage = "Alphabets only")]
         [MaxLength(40, ErrorMessage = "Product name can be maximum 40 characters long")]
         [MinLength(2, ErrorMessage = "Product name should contain at least 2 characters")]
         public string ProductName { get; set; }
 
         [Display(Name = "Price")]
         [Required(ErrorMessage = "Price can't be blank")]
-        [Range(0, 10000, ErrorMessage = "Price should be in between 0  and 10000")]
+        [Range(0, 1000000, ErrorMessage = "Price should be in between 0  and 1000000")]
         [DivisibleBy10(ErrorMessage = "Price should in multiples 10")]
         public Nullable<decimal> Price { get; set; }
-        
+
         [Column("DateOfPurchase", TypeName = "datetime")]
         [Display(Name = "Date of Purchase")]
+        [DisplayFormat(DataFormatString = "M/d/yyyy", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> DOP { get; set; }
 
         [Display(Name = "Availability Status")]
@@ -38,18 +39,18 @@ namespace EFDbFirstApproachExample.Models
 
         [Display(Name = "Category")]
         [Required(ErrorMessage = "Category can't be blank")]
-        public Nullable<long> CategoryID { get; set; }
+        public long CategoryID { get; set; }
 
         [Display(Name = "Brand")]
         [Required(ErrorMessage = "Brand can't be blank")]
-        public Nullable<long> BrandID { get; set; }
+        public long BrandID { get; set; }
 
         [Display(Name = "Active")]
-        public Nullable<bool> Active { get; set; }
+        public bool Active { get; set; }
 
         [Display(Name = "Photo")]
         public string Photo { get; set; }
-        
+
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
     }
