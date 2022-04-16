@@ -1,4 +1,5 @@
-﻿using EFDbFirstApproachExample.Identity;
+﻿using EFDbFirstApproachExample.Filters;
+using EFDbFirstApproachExample.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace EFDbFirstApproachExample.Areas.Admin.Controllers
 {
+    [AdminAuthorization]
     public class UsersController : Controller
     {
         // GET: Admin/Users/Index

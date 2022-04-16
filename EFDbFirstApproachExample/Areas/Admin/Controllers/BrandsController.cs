@@ -1,4 +1,5 @@
-﻿using EFDbFirstApproachExample.Models;
+﻿using EFDbFirstApproachExample.Filters;
+using EFDbFirstApproachExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace EFDbFirstApproachExample.Areas.Admin.Controllers
 {
+    [AdminAuthorization]
     public class BrandsController : Controller
     {
         // GET: Brands/Index
