@@ -1,4 +1,5 @@
-﻿using EFDbFirstApproachExample.Models;
+﻿using EFDbFirstApproachExample.Filters;
+using EFDbFirstApproachExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace EFDbFirstApproachExample.Controllers
     public class ProductsController : Controller
     {
         // GET: Products
+        [MyAuthenticationFilter]
         public ActionResult Index()
         {
             CompanyDbContext db = new CompanyDbContext();
