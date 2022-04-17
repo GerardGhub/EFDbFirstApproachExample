@@ -22,6 +22,7 @@ namespace EFDbFirstApproachExample.Controllers
 
         // POST: Account/Register
         [HttpPost]
+        [OverrideExceptionFilters]
         public ActionResult Register(RegisterViewModel rvm)
         {
             if (ModelState.IsValid)

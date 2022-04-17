@@ -13,6 +13,7 @@ namespace EFDbFirstApproachExample.Controllers
         // GET: Products
         [MyAuthenticationFilter]
         [CustomerAuthorization]
+        [MyActionFilter]
         public ActionResult Index()
         {
             CompanyDbContext db = new CompanyDbContext();
