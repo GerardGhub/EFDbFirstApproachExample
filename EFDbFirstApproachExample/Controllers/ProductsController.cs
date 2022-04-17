@@ -21,5 +21,10 @@ namespace EFDbFirstApproachExample.Controllers
             return View(products);
            
         }
+        [ChildActionOnly]
+        public ActionResult DisplaySingleProduct(Product p)
+        {
+            return PartialView("MyProduct", p);
+        }
     }
 }

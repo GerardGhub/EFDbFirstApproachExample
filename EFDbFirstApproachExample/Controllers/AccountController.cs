@@ -1,11 +1,11 @@
-﻿using EFDbFirstApproachExample.ViewModels;
-using EFDbFirstApproachExample.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using EFDbFirstApproachExample.Models;
+using EFDbFirstApproachExample.ViewModels;
+using EFDbFirstApproachExample.Identity;
 using System.Web.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -15,14 +15,14 @@ namespace EFDbFirstApproachExample.Controllers
     public class AccountController : Controller
     {
         // GET: Account/Register
-        public ActionResult Register()
+        [ActionName("Register")]
+        public ActionResult RegistrationPage()
         {
             return View();
         }
 
         // POST: Account/Register
         [HttpPost]
-        [OverrideExceptionFilters]
         public ActionResult Register(RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
@@ -32,14 +32,7 @@ namespace EFDbFirstApproachExample.Controllers
                 var userStore = new ApplicationUserStore(appDbContext);
                 var userManager = new ApplicationUserManager(userStore);
                 var passwordHash = Crypto.HashPassword(rvm.Password);
-                var user = new ApplicationUser() { Email = rvm.Email, 
-                    UserName = rvm.Username, 
-                    PasswordHash = passwordHash, 
-                    City = rvm.City, 
-                    Country = rvm.Country, 
-                    Birthday = rvm.DateOfBirth, 
-                    Address = rvm.Address, 
-                    PhoneNumber = rvm.Mobile };
+                var user = new ApplicationUser() { Email = rvm.Email, UserName = rvm.Username, PasswordHash = passwordHash, City = rvm.City, Country = rvm.Country, Birthday = rvm.DateOfBirth, Address = rvm.Address, PhoneNumber = rvm.Mobile };
                 IdentityResult result = userManager.Create(user);
 
                 if (result.Succeeded)
@@ -48,10 +41,7 @@ namespace EFDbFirstApproachExample.Controllers
                     userManager.AddToRole(user.Id, "Customer");
 
                     //login
-                    //this.LoginUser(userManager, user);
-                    var authenticationManager = HttpContext.GetOwinContext().Authentication;
-                    var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                    authenticationManager.SignIn(new AuthenticationProperties(), userIdentity);
+                    this.LoginUser(userManager, user);
                 }
                 return RedirectToAction("Index", "Home");
             }
@@ -62,14 +52,11 @@ namespace EFDbFirstApproachExample.Controllers
             }
         }
 
-
         // GET: Account/Login
         public ActionResult Login()
         {
             return View();
         }
-
-
 
         // POST: Account/Login
         [HttpPost]
@@ -84,10 +71,7 @@ namespace EFDbFirstApproachExample.Controllers
             if (user != null)
             {
                 //login
-                var authenticationManager = HttpContext.GetOwinContext().Authentication;
-                var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                authenticationManager.SignIn(new AuthenticationProperties(), userIdentity);
-
+                this.LoginUser(userManager, user);
 
                 if (userManager.IsInRole(user.Id, "Admin"))
                 {
@@ -101,13 +85,20 @@ namespace EFDbFirstApproachExample.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
             }
             else
             {
                 ModelState.AddModelError("myerror", "Invalid username or password");
                 return View();
             }
+        }
+
+        [NonAction]
+        public void LoginUser(ApplicationUserManager userManager, ApplicationUser user)
+        {
+            var authenticationManager = HttpContext.GetOwinContext().Authentication;
+            var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            authenticationManager.SignIn(new AuthenticationProperties(), userIdentity);
         }
 
         // GET: Account/Logout
@@ -127,6 +118,9 @@ namespace EFDbFirstApproachExample.Controllers
             ApplicationUser appUser = userManager.FindById(User.Identity.GetUserId());
             return View(appUser);
         }
-
     }
 }
+
+
+
+
