@@ -1,0 +1,11 @@
+MANAGER 
+manager123
+
+
+admin
+admin123
+
+
+
+john
+bravo   for users account only
