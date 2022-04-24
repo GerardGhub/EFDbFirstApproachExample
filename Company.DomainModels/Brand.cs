@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace EFDbFirstApproachExample.Models
+namespace Company.DomainModels
 {
     public class Brand
     {

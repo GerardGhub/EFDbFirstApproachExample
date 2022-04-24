@@ -1,23 +1,33 @@
-﻿using EFDbFirstApproachExample.Filters;
-using EFDbFirstApproachExample.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EFDbFirstApproachExample.Filters;
+using Company.DomainModels;
+using Company.DataLayer;
+using Company.ServiceContracts;
+using Company.ServiceLayer;
 
 namespace EFDbFirstApproachExample.Areas.Admin.Controllers
 {
     [AdminAuthorization]
     public class ProductsController : Controller
     {
-        CompanyDbContext db = new CompanyDbContext();
+        CompanyDbContext db;
+        IProductsService prodService;
+
+        public ProductsController(IProductsService pService)
+        {
+            this.db = new CompanyDbContext();
+            this.prodService = pService;
+        }
 
         // GET: Products/Index
         public ActionResult Index(string search = "", string SortColumn = "ProductName", string IconClass = "fa-sort-asc", int PageNo = 1)
         {
             ViewBag.search = search;
-            List<Product> products = db.Products.Where(temp => temp.ProductName.Contains(search)).ToList();
+            List<Product> products = prodService.SearchProducts(search);
 
             /*Sorting*/
             ViewBag.SortColumn = SortColumn;
@@ -85,7 +95,7 @@ namespace EFDbFirstApproachExample.Areas.Admin.Controllers
 
         public ActionResult Details(long id)
         {
-            Product p = db.Products.Where(temp => temp.ProductID == id).FirstOrDefault();
+            Product p = prodService.GetProductByProductID(id);
             return View(p);
         }
 
@@ -109,8 +119,7 @@ namespace EFDbFirstApproachExample.Areas.Admin.Controllers
                     var base64String = Convert.ToBase64String(imgBytes, 0, imgBytes.Length);
                     p.Photo = base64String;
                 }
-                db.Products.Add(p);
-                db.SaveChanges();
+                prodService.InertProduct(p);
                 return RedirectToAction("Index");
             }
             else
@@ -123,7 +132,7 @@ namespace EFDbFirstApproachExample.Areas.Admin.Controllers
 
         public ActionResult Edit(long id)
         {
-            Product existingProduct = db.Products.Where(temp => temp.ProductID == id).FirstOrDefault();
+            Product existingProduct = prodService.GetProductByProductID(id);
             ViewBag.Categories = db.Categories.ToList();
             ViewBag.Brands = db.Brands.ToList();
             return View(existingProduct);
@@ -151,24 +160,25 @@ namespace EFDbFirstApproachExample.Areas.Admin.Controllers
                 existingProduct.AvailabilityStatus = p.AvailabilityStatus;
                 existingProduct.Active = p.Active;
 
-                db.SaveChanges();
+                prodService.UpdateProduct(existingProduct);
             }
             return RedirectToAction("Index", "Products");
         }
 
         public ActionResult Delete(long id)
         {
-            Product existingProduct = db.Products.Where(temp => temp.ProductID == id).FirstOrDefault();
+            Product existingProduct = prodService.GetProductByProductID(id);
             return View(existingProduct);
         }
 
         [HttpPost]
         public ActionResult Delete(long id, Product p)
         {
-            Product existingProduct = db.Products.Where(temp => temp.ProductID == id).FirstOrDefault();
-            db.Products.Remove(existingProduct);
-            db.SaveChanges();
+            prodService.DeleteProduct(id);
             return RedirectToAction("Index", "Products");
         }
     }
 }
+
+
+

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace EFDbFirstApproachExample.Models
+namespace Company.DomainModels
 {
     public class Category
     {

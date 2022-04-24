@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EFDbFirstApproachExample.CustomValidations;
+using Company.DomainModels.CustomValidations;
 
-namespace EFDbFirstApproachExample.Models
+namespace Company.DomainModels
 {
     [Table("Products", Schema = "dbo")]
     public class Product
