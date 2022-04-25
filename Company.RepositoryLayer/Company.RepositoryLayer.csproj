@@ -5,10 +5,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{510481B0-EDE9-45A6-92D0-5B7EFB02502C}</ProjectGuid>
+    <ProjectGuid>{07AA56FE-98F4-449E-B8D0-66FFAFA64AB8}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>Company.ServiceLayer</RootNamespace>
-    <AssemblyName>Company.ServiceLayer</AssemblyName>
+    <RootNamespace>Company.RepositoryLayer</RootNamespace>
+    <AssemblyName>Company.RepositoryLayer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -62,9 +62,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ProductsRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -101,14 +103,6 @@
     <ProjectReference Include="..\Company.RepositoryContracts\Company.RepositoryContracts.csproj">
       <Project>{d8fba317-83e5-4b66-b7ab-028750eb9a68}</Project>
       <Name>Company.RepositoryContracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Company.RepositoryLayer\Company.RepositoryLayer.csproj">
-      <Project>{07aa56fe-98f4-449e-b8d0-66ffafa64ab8}</Project>
-      <Name>Company.RepositoryLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Company.ServiceContracts\Company.ServiceContracts.csproj">
-      <Project>{ef1029cb-7f3a-46c8-9582-302c3cb60342}</Project>
-      <Name>Company.ServiceContracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

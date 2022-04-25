@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Company.DomainModels;
 
-namespace Company.ServiceContracts
+namespace Company.RepositoryContracts
 {
-    public interface IProductsService
+    public interface IProductsRepository
     {
         List<Product> GetProducts();
         List<Product> SearchProducts(string ProductName);
