@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data.Entity;
 //using EFDbFirstApproachExample.Migrations;
 using Company.DomainModels;
+
 namespace Company.DataLayer
 {
     public class CompanyDbContext : DbContext

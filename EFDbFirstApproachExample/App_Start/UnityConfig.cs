@@ -1,9 +1,6 @@
 using System;
+
 using Unity;
-using Company.ServiceContracts;
-using Company.ServiceLayer;
-using Company.RepositoryContracts;
-using Company.RepositoryLayer;
 
 namespace EFDbFirstApproachExample
 {
@@ -39,10 +36,12 @@ namespace EFDbFirstApproachExample
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterType<IProductsService, ProductsService>();
-            container.RegisterType<IProductsRepository, ProductsRepository>();
+            // NOTE: To load from web.config uncomment the line below.
+            // Make sure to add a Unity.Configuration to the using statements.
+            // container.LoadConfiguration();
+
+            // TODO: Register your type's mappings here.
+            // container.RegisterType<IProductRepository, ProductRepository>();
         }
     }
 }
-
-

@@ -16,6 +16,3 @@ namespace Company.DomainModels
         public string CategoryName { get; set; }
     }
 }
-
-
-

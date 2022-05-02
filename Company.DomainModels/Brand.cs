@@ -14,5 +14,3 @@ namespace Company.DomainModels
         public string BrandName { get; set; }
     }
 }
-
-
